@@ -1,0 +1,103 @@
+
+drawable.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+force
+  rotate: false
+  xy: 1, 423
+  size: 460, 60
+  orig: 460, 60
+  offset: 0, 0
+  index: -1
+hex
+  rotate: false
+  xy: 1, 165
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+redanimation
+  rotate: false
+  xy: 1, 83
+  size: 240, 80
+  orig: 240, 80
+  offset: 0, 0
+  index: -1
+blueanimation
+  rotate: false
+  xy: 1, 1
+  size: 240, 80
+  orig: 240, 80
+  offset: 0, 0
+  index: -1
+timebound
+  rotate: false
+  xy: 259, 361
+  size: 200, 60
+  orig: 200, 60
+  offset: 0, 0
+  index: -1
+timeboundverticle
+  rotate: false
+  xy: 259, 159
+  size: 60, 200
+  orig: 60, 200
+  offset: 0, 0
+  index: -1
+menu
+  rotate: false
+  xy: 321, 276
+  size: 83, 83
+  orig: 83, 83
+  offset: 0, 0
+  index: -1
+next
+  rotate: false
+  xy: 321, 191
+  size: 83, 83
+  orig: 83, 83
+  offset: 0, 0
+  index: -1
+re
+  rotate: false
+  xy: 243, 74
+  size: 83, 83
+  orig: 83, 83
+  offset: 0, 0
+  index: -1
+cursor_normal
+  rotate: false
+  xy: 243, 12
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+hex-tile
+  rotate: false
+  xy: 406, 299
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+cursor_higlight
+  rotate: false
+  xy: 406, 237
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+facebook
+  rotate: false
+  xy: 406, 175
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+googleplus
+  rotate: false
+  xy: 328, 129
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1

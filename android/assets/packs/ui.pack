@@ -1,0 +1,236 @@
+
+ui.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+8B8 GIFT CODE
+  rotate: false
+  xy: 1, 213
+  size: 419, 42
+  orig: 419, 42
+  offset: 0, 0
+  index: -1
+ninepatch_stock
+  rotate: false
+  xy: 1, 111
+  size: 200, 100
+  orig: 200, 100
+  offset: 0, 0
+  index: -1
+ninepatch2
+  rotate: false
+  xy: 1, 111
+  size: 200, 100
+  orig: 200, 100
+  offset: 0, 0
+  index: -1
+ninepatch3
+  rotate: false
+  xy: 1, 9
+  size: 200, 100
+  orig: 200, 100
+  offset: 0, 0
+  index: -1
+ninepatch_outline
+  rotate: false
+  xy: 1, 9
+  size: 200, 100
+  orig: 200, 100
+  offset: 0, 0
+  index: -1
+ninepatch_shadow_bottom
+  rotate: false
+  xy: 203, 111
+  size: 200, 100
+  orig: 200, 100
+  offset: 0, 0
+  index: -1
+ninepatch_rounded
+  rotate: false
+  xy: 203, 9
+  size: 200, 100
+  orig: 200, 100
+  offset: 0, 0
+  index: -1
+ninepatch4
+  rotate: false
+  xy: 422, 159
+  size: 188, 96
+  orig: 188, 96
+  offset: 0, 0
+  index: -1
+avatar
+  rotate: false
+  xy: 405, 7
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+email
+  rotate: false
+  xy: 612, 135
+  size: 120, 120
+  orig: 120, 120
+  offset: 0, 0
+  index: -1
+loading
+  rotate: false
+  xy: 734, 183
+  size: 72, 72
+  orig: 72, 72
+  offset: 0, 0
+  index: -1
+icono_page
+  rotate: false
+  xy: 808, 191
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+icono_info
+  rotate: false
+  xy: 874, 191
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+icono_setting
+  rotate: false
+  xy: 940, 191
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+active
+  rotate: false
+  xy: 734, 121
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+ninepatch5
+  rotate: false
+  xy: 557, 85
+  size: 32, 72
+  orig: 32, 72
+  offset: 0, 0
+  index: -1
+back
+  rotate: false
+  xy: 557, 23
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+unactive
+  rotate: false
+  xy: 796, 121
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+block
+  rotate: false
+  xy: 858, 129
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: -1
+icon-search
+  rotate: false
+  xy: 920, 139
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+user_manager
+  rotate: false
+  xy: 972, 139
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+circle
+  rotate: false
+  xy: 591, 93
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+fix
+  rotate: false
+  xy: 633, 84
+  size: 50, 49
+  orig: 50, 49
+  offset: 0, 0
+  index: -1
+icon_submenu
+  rotate: false
+  xy: 619, 32
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+ninepatch_none
+  rotate: false
+  xy: 685, 93
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+textfield
+  rotate: false
+  xy: 671, 32
+  size: 29, 50
+  orig: 29, 50
+  offset: 0, 0
+  index: -1
+down
+  rotate: false
+  xy: 557, 1
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+textfieldshadow
+  rotate: false
+  xy: 579, 1
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+selectboxback
+  rotate: false
+  xy: 702, 58
+  size: 27, 33
+  orig: 27, 33
+  offset: 0, 0
+  index: -1
+icon khoa
+  rotate: false
+  xy: 702, 28
+  size: 25, 28
+  orig: 25, 28
+  offset: 0, 0
+  index: -1
+icon_user
+  rotate: false
+  xy: 920, 107
+  size: 22, 30
+  orig: 22, 30
+  offset: 0, 0
+  index: -1
+rec_vien
+  rotate: false
+  xy: 405, 201
+  size: 10, 10
+  orig: 10, 10
+  offset: 0, 0
+  index: -1
+bg_white
+  rotate: false
+  xy: 1, 6
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
