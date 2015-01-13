@@ -1,7 +1,6 @@
 package engine.module.view.imp;
 
 import utils.elements.Button;
-import utils.factory.Log;
 import utils.listener.OnComplete;
 import utils.listener.OnCompleteListener;
 
@@ -22,7 +21,7 @@ import engine.module.view.ViewElement;
 import engine.module.view.ViewName;
 
 public class ViewTest4 extends ViewElement {
-	Button btn;
+	Button	btn;
 
 	public ViewTest4(ViewName viewParentName, IController controller,
 			ViewName viewName, Rectangle bound) {
@@ -40,7 +39,6 @@ public class ViewTest4 extends ViewElement {
 
 						@Override
 						public void onComplete(Object data) {
-							Log.d("Click to View Test 4");
 							if (!getController().isContainView(
 									ViewName.HOME_VIEW2)) {
 								HomeView viewTest4 = new HomeView(

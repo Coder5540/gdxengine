@@ -2,6 +2,7 @@ package com.coder5560.game.screens;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 import engine.module.screens.AbstractGameScreen;
 import engine.module.screens.GameCore;
@@ -43,25 +44,25 @@ public class TestScreen extends AbstractGameScreen {
 			shapeRenderer = new ShapeRenderer();
 		}
 
-//		shapeRenderer.setProjectionMatrix(viewport.getCamera().combined);
-//
-//		shapeRenderer.begin(ShapeType.Filled);
-//		drawFilled(shapeRenderer);
-//		shapeRenderer.end();
-//
-//		shapeRenderer.begin(ShapeType.Line);
-//		drawLine(shapeRenderer);
-//		shapeRenderer.end();
+		shapeRenderer.setProjectionMatrix(viewport.getCamera().combined);
+
+		shapeRenderer.begin(ShapeType.Filled);
+		drawFilled(shapeRenderer);
+		shapeRenderer.end();
+
+		shapeRenderer.begin(ShapeType.Line);
+		drawLine(shapeRenderer);
+		shapeRenderer.end();
 	}
 
 	TestShape testShape = new TestShape();
 
 	public void drawFilled(ShapeRenderer shapeRenderer) {
-//		testShape.drawFilled(shapeRenderer);
+		testShape.drawFilled(shapeRenderer);
 	}
 
 	public void drawLine(ShapeRenderer shapeRenderer) {
-//		testShape.drawLine(shapeRenderer);
+		testShape.drawLine(shapeRenderer);
 	}
 
 	@Override

@@ -1,6 +1,5 @@
 package utils.elements;
 
-import utils.factory.Factory;
 import utils.listener.OnClickListener;
 
 import com.badlogic.gdx.graphics.Texture;

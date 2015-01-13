@@ -12,9 +12,8 @@ import engine.module.updatehandler.IUpdateHandler;
 
 public interface IViewElement {
 
-	
 	public IViewElement buildComponent();
-	
+
 	public IViewElement show(Stage stage, float duration,
 			final OnCompleteListener listener);
 
@@ -47,6 +46,10 @@ public interface IViewElement {
 	public ViewName getParentViewName();
 
 	public ViewName getViewName();
+
+	public IViewElement setAutoRemoveWhenSwitchView(boolean autoRemove);
+
+	public boolean isAutoRemoveWhenSwitchView();
 
 	public IController getController();
 

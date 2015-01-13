@@ -18,21 +18,24 @@ import engine.module.updatehandler.UpdateHandlerList;
  * 
  */
 public abstract class ViewElement extends Table implements IViewElement {
-	private IController _Controller;
 
-	private ViewName _ViewName;
+	private IController			_Controller;
 
-	private ViewName _ViewParentName;
+	private ViewName			_ViewName;
 
-	private ViewState _ViewState;
+	private ViewName			_ViewParentName;
 
-	public UpdateHandlerList handlerList = new UpdateHandlerList(10);
+	private ViewState			_ViewState;
 
-	public boolean mIgnoreUpdate = false;
+	public UpdateHandlerList	handlerList		= new UpdateHandlerList(10);
 
-	public boolean drawChildren = true;
+	public boolean				mIgnoreUpdate	= false;
 
-	public boolean isDoneAction = true;
+	public boolean				drawChildren	= true;
+
+	public boolean				isDoneAction	= true;
+
+	public boolean				isAutoRemove	= true;
 
 	public ViewElement(ViewName viewParentName, IController controller,
 			ViewName viewName, Rectangle bound) {
@@ -165,6 +168,15 @@ public abstract class ViewElement extends Table implements IViewElement {
 	public IViewElement setViewName(ViewName viewName) {
 		this._ViewName = viewName;
 		return this;
+	}
+
+	public IViewElement setAutoRemoveWhenSwitchView(boolean autoRemove) {
+		this.isAutoRemove = autoRemove;
+		return this;
+	}
+
+	public boolean isAutoRemoveWhenSwitchView() {
+		return isAutoRemove;
 	}
 
 	@Override

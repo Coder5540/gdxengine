@@ -2,6 +2,8 @@ package engine.module.view;
 
 import java.util.HashMap;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
+
 import utils.factory.Log;
 import engine.element.Engine;
 import engine.module.screens.AbstractGameScreen;
@@ -87,6 +89,9 @@ public abstract class Controller implements IController {
 
 	@Override
 	public IController setCurrentView(IViewElement view) {
+		if (_CurrentView != null && _CurrentView.isAutoRemoveWhenSwitchView()) {
+			((Actor) _CurrentView).remove();
+		}
 		this._CurrentView = view;
 		return this;
 	}

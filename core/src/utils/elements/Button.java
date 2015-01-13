@@ -77,7 +77,7 @@ public class Button extends Group {
 		bg.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				addAction(Actions.sequence(Actions.scaleTo(1.2f, 1.2f, .05f),
+				addAction(Actions.sequence(Actions.scaleTo(1.1f, 1.1f, .05f),
 						Actions.scaleTo(1f, 1f, .1f, Interpolation.swingOut),
 						Actions.run(new Runnable() {
 							@Override

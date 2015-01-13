@@ -1,7 +1,5 @@
 package engine.module.view.imp;
 
-import org.omg.PortableServer.POA;
-
 import utils.listener.OnCompleteListener;
 
 import com.badlogic.gdx.Gdx;
@@ -12,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.utils.Array;
-import com.coder5560.game.enums.Constants;
 
 import engine.element.iml.ClickItemEvent;
 import engine.element.iml.HomeItem;
@@ -25,13 +22,15 @@ import engine.module.view.ViewName;
 
 public class HomeView extends ViewElement {
 
-	public int NUM_COLS = 5;
-	public int NUM_ROWS = 3;
-	public float pading = 20f;
-	public float iconW = 100;
-	public float iconH = 100;
+	public int			NUM_COLS	= 4;
+	public int			NUM_ROWS	= 3;
+	public float		pading		= 40f;
+	public float		iconW;
+	public float		iconH;
+	public float		iconSize;
+	int					align		= Align.topLeft;
 
-	Array<HomeItemData> itemDatas = new Array<HomeItemData>();
+	Array<HomeItemData>	itemDatas	= new Array<HomeItemData>();
 
 	public HomeView(ViewName viewParentName, IController controller,
 			ViewName viewName, Rectangle bound) {
@@ -40,21 +39,23 @@ public class HomeView extends ViewElement {
 	}
 
 	public void calculateSize() {
-		iconW = (getWidth() - (NUM_COLS + 1) * pading) / NUM_COLS;
-		iconH = (getHeight() - (NUM_ROWS + 1) * pading) / NUM_ROWS;
+		iconW = (getWidth() - (NUM_COLS + 1) * pading) / (NUM_COLS);
+		iconH = (getHeight() - (NUM_ROWS + 1) * pading) / (NUM_ROWS);
+		iconSize = (iconW < iconH) ? iconW : iconH;
 	}
 
 	public IViewElement buildComponent() {
-//		calculateSize();
-		HomeItemData defaultData = new HomeItemData(HomeItemName.ITEM_DEFAULT,
-				iconW, iconW, new Texture(
-						Gdx.files.internal("Img/Add-User-icon.png")),
-				"Function", homeItemClick);
-		for (int i = 0; i < 5; i++) {
-			HomeItem homeItem = new HomeItem(defaultData);
-			homeItem.setPosition(getPositionItem(i).x, getPositionItem(i).y,
-					Align.center);
-			this.addActor(homeItem);
+		calculateSize();
+		// HomeItemData defaultData = new
+		// HomeItemData(HomeItemName.ITEM_DEFAULT,
+		// iconSize, iconSize, new Texture(
+		// Gdx.files.internal("Img/Add-User-icon.png")),
+		// "Function", homeItemClick);
+		for (int i = 0; i < 12; i++) {
+			addHomeItem(new HomeItemData(HomeItemName.ITEM_DEFAULT, iconSize,
+					iconSize, new Texture(
+							Gdx.files.internal("Img/Add-User-icon.png")),
+					"App " + i, homeItemClick));
 		}
 		return this;
 	}
@@ -66,10 +67,23 @@ public class HomeView extends ViewElement {
 
 	public Vector2 getPositionItem(int index) {
 		int col = index % NUM_COLS;
-		int row = index % NUM_ROWS;
-		float w = Constants.WIDTH_SCREEN / (NUM_COLS + 1);
-		float h = Constants.HEIGHT_SCREEN / (NUM_ROWS + 1);
-		return new Vector2(w * (col + 1), h * (row + 1));
+		int row = index / NUM_COLS;
+		float w = getWidth() / (NUM_COLS);
+		float h = getHeight() / (NUM_ROWS);
+		if (align == Align.bottomLeft) {
+			return new Vector2(w * (col + .5f), h * (row + .5f));
+		} else if (align == Align.bottomRight) {
+			return new Vector2(w * ((NUM_COLS - col - 1) + .5f), h
+					* (row + .5f));
+		} else if (align == Align.topLeft) {
+			return new Vector2(w * (col + .5f), h
+					* ((NUM_ROWS - row - 1) + .5f));
+		} else if (align == Align.topRight) {
+			return new Vector2(w * ((NUM_COLS - col - 1) + .5f), h
+					* ((NUM_ROWS - row - 1) + .5f));
+		}
+
+		return new Vector2(w * (col + .5f), h * (row + .5f));
 
 	}
 
@@ -77,8 +91,11 @@ public class HomeView extends ViewElement {
 		if (isContainIcon(itemData.itemName, itemData.title)) {
 			return this;
 		}
+		HomeItem item = new HomeItem(itemData);
+		item.setPosition(getPositionItem(itemDatas.size).x,
+				getPositionItem(itemDatas.size).y, Align.center);
 		itemDatas.add(itemData);
-		rebuildUI();
+		this.addActor(item);
 		return this;
 	}
 
@@ -108,12 +125,13 @@ public class HomeView extends ViewElement {
 		return this;
 	}
 
-	ClickItemEvent homeItemClick = new ClickItemEvent() {
+	ClickItemEvent	homeItemClick	= new ClickItemEvent() {
 
-		@Override
-		public void broadcastEvent(HomeItemName itemName) {
+										@Override
+										public void broadcastEvent(
+												HomeItemName itemName) {
 
-		}
-	};
+										}
+									};
 
 }
