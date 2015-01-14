@@ -30,11 +30,11 @@ import com.coder5560.game.views.TraceView;
 import com.coder5560.game.views.View;
 
 public class MainMenu extends View {
-	private Image	tranBg;
-	Table			content;
-	public int		lastSelect			= 0;
-	public ListMenu	menu;
-	private boolean	ignoreUpdateMove	= true;
+	private Image tranBg;
+	Table content;
+	public int lastSelect = 0;
+	public ListMenu menu;
+	private boolean ignoreUpdateMove = true;
 
 	public MainMenu buildComponent() {
 		Color colorBg = new Color(100 / 255f, 100 / 255f, 100 / 255f, 1f);
@@ -71,7 +71,7 @@ public class MainMenu extends View {
 
 		menu.setOnPageViewClicked(onPageViewClicked);
 		menu.setOnListViewTestClicked(onListViewTestClicked);
-		menu.setOnBoardGameClicked(onBoardGameClicked);
+		menu.setOnHomeViewTestClicked(onHomeViewTestClicked);
 		menu.setOnAvatarClicked(onAvatarClicked);
 		menu.setOnSpellingClicked(onSpellingClicked);
 		menu.setOnCrossWordClicked(onCrossWordGame);
@@ -121,7 +121,7 @@ public class MainMenu extends View {
 		})));
 	}
 
-	Actor	bar, currentView;
+	Actor bar, currentView;
 
 	@Override
 	public void act(float delta) {
@@ -161,253 +161,190 @@ public class MainMenu extends View {
 		hide(null);
 	}
 
-	boolean					canPan					= false;
-	IInputListener			customListener			= new IInputListener() {
-														public boolean touchDown(
-																float x,
-																float y,
-																int pointer,
-																int button) {
-															if (content.getX() == -content
-																	.getWidth()
-																	&& x < 10
-																	&& !canPan) {
-																canPan = true;
-																tranBg.setVisible(true);
-															}
-															if (content.getX() == 0) {
-																canPan = true;
-															}
-															return false;
-														};
+	boolean canPan = false;
+	IInputListener customListener = new IInputListener() {
+		public boolean touchDown(float x, float y, int pointer, int button) {
+			if (content.getX() == -content.getWidth() && x < 10 && !canPan) {
+				canPan = true;
+				tranBg.setVisible(true);
+			}
+			if (content.getX() == 0) {
+				canPan = true;
+			}
+			return false;
+		};
 
-														public boolean pan(
-																float x,
-																float y,
-																float deltaX,
-																float deltaY) {
-															if (canPan) {
-																setIgnoreUpdateMove(false);
-																tranBg.setVisible(true);
-																content.setPosition(
-																		MathUtils
-																				.clamp(content
-																						.getX()
-																						+ deltaX,
-																						-content.getWidth(),
-																						0),
-																		content.getY());
-																float alpha = (content
-																		.getWidth() - content
-																		.getX())
-																		/ content
-																				.getWidth();
-																if (content
-																		.getX() == 0)
-																	alpha = 1;
-																tranBg.setColor(
-																		tranBg.getColor().r,
-																		tranBg.getColor().g,
-																		tranBg.getColor().b,
-																		alpha);
-																return true;
-															}
-															return false;
-														};
+		public boolean pan(float x, float y, float deltaX, float deltaY) {
+			if (canPan) {
+				setIgnoreUpdateMove(false);
+				tranBg.setVisible(true);
+				content.setPosition(
+						MathUtils.clamp(content.getX() + deltaX,
+								-content.getWidth(), 0), content.getY());
+				float alpha = (content.getWidth() - content.getX())
+						/ content.getWidth();
+				if (content.getX() == 0)
+					alpha = 1;
+				tranBg.setColor(tranBg.getColor().r, tranBg.getColor().g,
+						tranBg.getColor().b, alpha);
+				return true;
+			}
+			return false;
+		};
 
-														public boolean panStop(
-																float x,
-																float y,
-																int pointer,
-																int button) {
-															if (canPan) {
-																float position = content
-																		.getX()
-																		+ content
-																				.getWidth();
-																if (position <= content
-																		.getWidth() / 2)
-																	hide(null);
-																if (position > content
-																		.getWidth() / 2)
-																	show(null);
-																canPan = false;
-																return true;
-															}
-															return false;
-														};
+		public boolean panStop(float x, float y, int pointer, int button) {
+			if (canPan) {
+				float position = content.getX() + content.getWidth();
+				if (position <= content.getWidth() / 2)
+					hide(null);
+				if (position > content.getWidth() / 2)
+					show(null);
+				canPan = false;
+				return true;
+			}
+			return false;
+		};
 
-													};
+	};
 
-	OnClickListener			onPageViewClicked		= new OnClickListener() {
+	OnClickListener onPageViewClicked = new OnClickListener() {
 
-														@Override
-														public void onClick(
-																float x, float y) {
-															Loading.ins
-																	.show((Group) getViewController()
-																			.getCurrentView());
-															getViewController()
-																	.getView(
-																			StringSystem.VIEW_MAIN_MENU)
-																	.hide(new OnComplete() {
+		@Override
+		public void onClick(float x, float y) {
+			Loading.ins.show((Group) getViewController().getCurrentView());
+			getViewController().getView(StringSystem.VIEW_MAIN_MENU).hide(
+					new OnComplete() {
 
-																		@Override
-																		public void onComplete(
-																				Object object) {
-																			Loading.ins
-																					.hide();
-																			PageView pageView = new PageView();
-																			pageView.build(
-																					getStage(),
-																					getViewController(),
-																					"pageview",
-																					new Rectangle(
-																							0,
-																							0,
-																							Constants.WIDTH_SCREEN,
-																							Constants.HEIGHT_SCREEN
-																									- Constants.HEIGHT_ACTIONBAR));
-																			pageView.buildComponent();
-																			pageView.show(null);
+						@Override
+						public void onComplete(Object object) {
+							Loading.ins.hide();
+							PageView pageView = new PageView();
+							pageView.build(
+									getStage(),
+									getViewController(),
+									"pageview",
+									new Rectangle(
+											0,
+											0,
+											Constants.WIDTH_SCREEN,
+											Constants.HEIGHT_SCREEN
+													- Constants.HEIGHT_ACTIONBAR));
+							pageView.buildComponent();
+							pageView.show(null);
 
-																		}
-																	});
-														}
-													};
+						}
+					});
+		}
+	};
 
-	OnClickListener			onBoardGameClicked		= new OnClickListener() {
+	OnClickListener onHomeViewTestClicked = new OnClickListener() {
 
-														@Override
-														public void onClick(
-																float x, float y) {
-															Loading.ins
-																	.show((Group) getViewController()
-																			.getCurrentView());
-															getViewController()
-																	.getView(
-																			StringSystem.VIEW_MAIN_MENU)
-																	.hide(new OnComplete() {
-																		@Override
-																		public void onComplete(
-																				Object object) {
-																			Loading.ins
-																					.hide();
-																		}
-																	});
+		@Override
+		public void onClick(float x, float y) {
+			Loading.ins.show((Group) getViewController().getCurrentView());
+			getViewController().getView(StringSystem.VIEW_MAIN_MENU).hide(
+					new OnComplete() {
+						@Override
+						public void onComplete(Object object) {
+							Loading.ins.hide();
+							ListHomeView listHomeView = new ListHomeView();
+							listHomeView
+									.build(getStage(),
+											getViewController(),
+											"homeviewtest",
+											new Rectangle(
+													0,
+													0,
+													Constants.WIDTH_SCREEN,
+													Constants.HEIGHT_SCREEN
+															- Constants.HEIGHT_ACTIONBAR));
+							listHomeView.buildComponent();
+							listHomeView.show(null);
+						}
+					});
 
-														}
-													};
+		}
+	};
 
-	OnClickListener			onListViewTestClicked	= new OnClickListener() {
+	OnClickListener onListViewTestClicked = new OnClickListener() {
 
-														@Override
-														public void onClick(
-																float x, float y) {
-															Loading.ins
-																	.show((Group) getViewController()
-																			.getCurrentView());
-															getViewController()
-																	.getView(
-																			StringSystem.VIEW_MAIN_MENU)
-																	.hide(new OnComplete() {
+		@Override
+		public void onClick(float x, float y) {
+			Loading.ins.show((Group) getViewController().getCurrentView());
+			getViewController().getView(StringSystem.VIEW_MAIN_MENU).hide(
+					new OnComplete() {
 
-																		@Override
-																		public void onComplete(
-																				Object object) {
-																			Loading.ins
-																					.hide();
-																			ListViewTest listViewTest = new ListViewTest();
-																			listViewTest
-																					.build(getStage(),
-																							getViewController(),
-																							"listviewtest",
-																							new Rectangle(
-																									0,
-																									0,
-																									Constants.WIDTH_SCREEN,
-																									Constants.HEIGHT_SCREEN));
-																			listViewTest
-																					.buildComponent();
-																			listViewTest
-																					.show(null);
+						@Override
+						public void onComplete(Object object) {
+							Loading.ins.hide();
+							ListViewTest listViewTest = new ListViewTest();
+							listViewTest.build(getStage(), getViewController(),
+									"listviewtest", new Rectangle(0, 0,
+											Constants.WIDTH_SCREEN,
+											Constants.HEIGHT_SCREEN));
+							listViewTest.buildComponent();
+							listViewTest.show(null);
 
-																		}
-																	});
-														}
-													};
+						}
+					});
+		}
+	};
 
-	OnClickListener			onAvatarClicked			= new OnClickListener() {
+	OnClickListener onAvatarClicked = new OnClickListener() {
 
-														@Override
-														public void onClick(
-																float x, float y) {
-															getViewController()
-																	.getView(
-																			StringSystem.VIEW_MAIN_MENU)
-																	.hide(new OnComplete() {
+		@Override
+		public void onClick(float x, float y) {
+			getViewController().getView(StringSystem.VIEW_MAIN_MENU).hide(
+					new OnComplete() {
 
-																		@Override
-																		public void onComplete(
-																				Object object) {
-																			
-																		}
-																	});
-														}
-													};
+						@Override
+						public void onComplete(Object object) {
 
-	OnClickListener			onSpellingClicked		= new OnClickListener() {
+						}
+					});
+		}
+	};
 
-														@Override
-														public void onClick(
-																float x, float y) {
-															getViewController()
-																	.getView(
-																			StringSystem.VIEW_MAIN_MENU)
-																	.hide(new OnComplete() {
+	OnClickListener onSpellingClicked = new OnClickListener() {
 
-																		@Override
-																		public void onComplete(
-																				Object object) {
-																		}
-																	});
-														}
-													};
+		@Override
+		public void onClick(float x, float y) {
+			getViewController().getView(StringSystem.VIEW_MAIN_MENU).hide(
+					new OnComplete() {
 
-	public OnClickListener	onCrossWordGame			= new OnClickListener() {
+						@Override
+						public void onComplete(Object object) {
+						}
+					});
+		}
+	};
 
-														@Override
-														public void onClick(
-																float x, float y) {
-															getViewController()
-																	.getView(
-																			StringSystem.VIEW_MAIN_MENU)
-																	.hide(new OnComplete() {
+	public OnClickListener onCrossWordGame = new OnClickListener() {
 
-																		@Override
-																		public void onComplete(
-																				Object object) {
-																		}
-																	});
-														}
-													};
-	public OnClickListener	onDictionaryClicked		= new OnClickListener() {
+		@Override
+		public void onClick(float x, float y) {
+			getViewController().getView(StringSystem.VIEW_MAIN_MENU).hide(
+					new OnComplete() {
 
-														@Override
-														public void onClick(
-																float x, float y) {
-															getViewController()
-																	.getView(
-																			StringSystem.VIEW_MAIN_MENU)
-																	.hide(new OnComplete() {
+						@Override
+						public void onComplete(Object object) {
+						}
+					});
+		}
+	};
+	public OnClickListener onDictionaryClicked = new OnClickListener() {
 
-																		@Override
-																		public void onComplete(
-																				Object object) {
-																		}
-																	});
-														}
-													};
+		@Override
+		public void onClick(float x, float y) {
+			getViewController().getView(StringSystem.VIEW_MAIN_MENU).hide(
+					new OnComplete() {
+
+						@Override
+						public void onComplete(Object object) {
+						}
+					});
+		}
+	};
 
 	public boolean isIgnoreUpdateMove() {
 		return ignoreUpdateMove;
@@ -416,11 +353,5 @@ public class MainMenu extends View {
 	public void setIgnoreUpdateMove(boolean ignoreUpdateMove) {
 		this.ignoreUpdateMove = ignoreUpdateMove;
 	}
-	
-	
-	
-	
-	
-	
 
 }

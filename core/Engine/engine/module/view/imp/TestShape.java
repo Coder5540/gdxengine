@@ -20,7 +20,6 @@ public class TestShape {
 
 	public TestShape() {
 		super();
-
 		bound = new Rectangle(Constants.WIDTH_SCREEN / 4,
 				Constants.HEIGHT_SCREEN / 4, Constants.WIDTH_SCREEN / 2,
 				Constants.HEIGHT_SCREEN / 2);

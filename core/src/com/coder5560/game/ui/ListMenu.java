@@ -123,14 +123,14 @@ public class ListMenu extends ScrollPane {
 					onPageViewClicked.onClick(x, y);
 			}
 		});
-		LabelButton userUnactive = new LabelButton("Board Game Test", lbStyle,
+		LabelButton listHomeViewTest = new LabelButton("List Home View Test", lbStyle,
 				getWidth(), 45);
-		userUnactive.setOnClickListener(new OnClickListener() {
+		listHomeViewTest.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(float x, float y) {
-				if (onBoardGameClicked != null)
-					onBoardGameClicked.onClick(x, y);
+				if (onHomeViewTest != null)
+					onHomeViewTest.onClick(x, y);
 			}
 		});
 		LabelButton userBlock = new LabelButton("List View Test", lbStyle,
@@ -144,7 +144,7 @@ public class ListMenu extends ScrollPane {
 			}
 		});
 		itemManager.addComponent(userActive);
-		itemManager.addComponent(userUnactive);
+		itemManager.addComponent(listHomeViewTest);
 		itemManager.addComponent(userBlock);
 
 	}
@@ -700,8 +700,8 @@ public class ListMenu extends ScrollPane {
 		this.onListViewTestClicked = onListViewTestClicked;
 	}
 
-	public void setOnBoardGameClicked(OnClickListener onBoardGameClicked) {
-		this.onBoardGameClicked = onBoardGameClicked;
+	public void setOnHomeViewTestClicked(OnClickListener onHomeViewTestClicked) {
+		this.onHomeViewTest = onHomeViewTestClicked;
 	}
 
 	public void setOnPageViewClicked(OnClickListener onPageViewClicked) {
@@ -732,7 +732,7 @@ public class ListMenu extends ScrollPane {
 
 
 	private OnClickListener	onListViewTestClicked;
-	private OnClickListener	onBoardGameClicked;
+	private OnClickListener	onHomeViewTest;
 	private OnClickListener	onPageViewClicked;
 	private OnClickListener	onAvatarClicked;
 	private OnClickListener	onSpellingClicked;

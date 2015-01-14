@@ -6,10 +6,10 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.coder5560.game.enums.GameEvent;
 import com.coder5560.game.enums.ViewState;
 
+import engine.element.TableElement;
 import engine.module.updatehandler.IUpdateHandler;
 import engine.module.updatehandler.UpdateHandlerList;
 
@@ -17,7 +17,7 @@ import engine.module.updatehandler.UpdateHandlerList;
  * @author Administrator
  * 
  */
-public abstract class ViewElement extends Table implements IViewElement {
+public abstract class ViewElement extends TableElement implements IViewElement {
 
 	private IController			_Controller;
 
@@ -115,9 +115,8 @@ public abstract class ViewElement extends Table implements IViewElement {
 		this.drawChildren = drawChildren;
 	}
 
-	public IViewElement registerUpdateHandler(IUpdateHandler handler) {
+	public void registerUpdateHandler(IUpdateHandler handler) {
 		handlerList.add(handler);
-		return this;
 	}
 
 	public boolean unregisterUpdateHandler(IUpdateHandler handler) {
@@ -128,9 +127,8 @@ public abstract class ViewElement extends Table implements IViewElement {
 		return mIgnoreUpdate;
 	}
 
-	public IViewElement setIgnoreUpdate(boolean pIgnoreUpdate) {
+	public void setIgnoreUpdate(boolean pIgnoreUpdate) {
 		mIgnoreUpdate = pIgnoreUpdate;
-		return this;
 	}
 
 	public boolean clearUpdatehandler(IUpdateHandler handler) {
@@ -140,14 +138,13 @@ public abstract class ViewElement extends Table implements IViewElement {
 		return handlerList.removeValue(handler, true);
 	}
 
-	public IViewElement clearUpdateHandlers() {
-		if (handlerList == null) {
-			return this;
+	public void clearUpdateHandlers() {
+		if (handlerList != null) {
+			handlerList.clear();
 		}
-		handlerList.clear();
-		return this;
 	}
 
+	
 	@Override
 	public IViewElement setViewState(ViewState state) {
 		this._ViewState = state;

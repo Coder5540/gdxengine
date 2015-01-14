@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import engine.module.updatehandler.IUpdateHandler;
 import engine.module.updatehandler.UpdateHandlerList;
 
-public class TableElement extends Table implements IEntityPosition {
+public abstract class TableElement extends Table implements IEntityPosition {
 
 	protected boolean			mIgnoreUpdate;
 
@@ -35,6 +35,7 @@ public class TableElement extends Table implements IEntityPosition {
 		}
 	}
 
+	
 	protected void beginDrawActor(Batch batch) {
 
 	}
@@ -49,6 +50,8 @@ public class TableElement extends Table implements IEntityPosition {
 
 	}
 
+	public abstract int getId();
+	
 	public boolean isDrawChildren() {
 		return drawChildren;
 	}

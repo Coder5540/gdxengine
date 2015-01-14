@@ -15,6 +15,8 @@ import engine.element.iml.ClickItemEvent;
 import engine.element.iml.HomeItem;
 import engine.element.iml.HomeItem.HomeItemName;
 import engine.element.iml.HomeItemData;
+import engine.module.list.ListView;
+import engine.module.list.Page;
 import engine.module.view.IController;
 import engine.module.view.IViewElement;
 import engine.module.view.ViewElement;
@@ -22,19 +24,21 @@ import engine.module.view.ViewName;
 
 public class HomeView extends ViewElement {
 
-	public int			NUM_COLS	= 4;
-	public int			NUM_ROWS	= 3;
-	public float		pading		= 40f;
-	public float		iconW;
-	public float		iconH;
-	public float		iconSize;
-	int					align		= Align.topLeft;
-
-	Array<HomeItemData>	itemDatas	= new Array<HomeItemData>();
+	public int NUM_COLS = 4;
+	public int NUM_ROWS = 3;
+	public float pading = 40f;
+	public float iconW;
+	public float iconH;
+	public float iconSize;
+	int align = Align.topLeft;
+	public ListView listView;
+	public Page currentPage;
+	Array<HomeItemData> itemDatas = new Array<HomeItemData>();
 
 	public HomeView(ViewName viewParentName, IController controller,
 			ViewName viewName, Rectangle bound) {
 		super(viewParentName, controller, viewName, bound);
+		listView = new ListView(getWidth(), getHeight());
 		buildComponent();
 	}
 
@@ -46,11 +50,6 @@ public class HomeView extends ViewElement {
 
 	public IViewElement buildComponent() {
 		calculateSize();
-		// HomeItemData defaultData = new
-		// HomeItemData(HomeItemName.ITEM_DEFAULT,
-		// iconSize, iconSize, new Texture(
-		// Gdx.files.internal("Img/Add-User-icon.png")),
-		// "Function", homeItemClick);
 		for (int i = 0; i < 12; i++) {
 			addHomeItem(new HomeItemData(HomeItemName.ITEM_DEFAULT, iconSize,
 					iconSize, new Texture(
@@ -62,7 +61,6 @@ public class HomeView extends ViewElement {
 
 	public void rebuildUI() {
 		this.clearChildren();
-
 	}
 
 	public Vector2 getPositionItem(int index) {
@@ -82,9 +80,7 @@ public class HomeView extends ViewElement {
 			return new Vector2(w * ((NUM_COLS - col - 1) + .5f), h
 					* ((NUM_ROWS - row - 1) + .5f));
 		}
-
 		return new Vector2(w * (col + .5f), h * (row + .5f));
-
 	}
 
 	public HomeView addHomeItem(HomeItemData itemData) {
@@ -125,13 +121,18 @@ public class HomeView extends ViewElement {
 		return this;
 	}
 
-	ClickItemEvent	homeItemClick	= new ClickItemEvent() {
+	ClickItemEvent homeItemClick = new ClickItemEvent() {
 
-										@Override
-										public void broadcastEvent(
-												HomeItemName itemName) {
+		@Override
+		public void broadcastEvent(HomeItemName itemName) {
 
-										}
-									};
+		}
+	};
 
+	@Override
+	public int getId() {
+		return 0;
+	}
+
+	
 }

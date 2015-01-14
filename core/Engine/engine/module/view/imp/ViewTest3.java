@@ -93,4 +93,10 @@ public class ViewTest3 extends ViewElement {
 		return this;
 	}
 
+	@Override
+	public int getId() {
+		return 0;
+	}
+
+	
 }

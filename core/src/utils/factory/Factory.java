@@ -57,10 +57,33 @@ public class Factory {
 		return (curentValue + 1);
 	}
 
+	public static int getNext(int curentValue, int min, int max, boolean loop) {
+		curentValue = clamp(curentValue, min, max);
+		if (curentValue == max) {
+			if (loop)
+				return min;
+			else
+				return max;
+		}
+		return (curentValue + 1);
+	}
+
 	public static int getPrevious(int curentValue, int min, int max) {
 		curentValue = clamp(curentValue, min, max);
 		if (curentValue == min)
 			return max;
+		return (curentValue - 1);
+	}
+
+	public static int getPrevious(int curentValue, int min, int max,
+			boolean loop) {
+		curentValue = clamp(curentValue, min, max);
+		if (curentValue == min) {
+			if (loop)
+				return max;
+			else
+				return min;
+		}
 		return (curentValue - 1);
 	}
 
@@ -74,30 +97,30 @@ public class Factory {
 
 	public static Vector2 getPosition(Rectangle bounds, Direct direct) {
 		switch (direct) {
-			case TOP_LEFT:
-				return new Vector2(bounds.x, bounds.y + bounds.height);
-			case TOP_RIGHT:
-				return new Vector2(bounds.x + bounds.width, bounds.y
-						+ bounds.height);
-			case TOP:
-				return new Vector2(bounds.x + bounds.width / 2, bounds.y
-						+ bounds.height);
-			case BOTTOM:
-				return new Vector2(bounds.x + bounds.width / 2, bounds.y);
-			case BOTTOM_LEFT:
-				return new Vector2(bounds.x, bounds.y);
-			case BOTTOM_RIGHT:
-				return new Vector2(bounds.x + bounds.width, bounds.y);
-			case MIDDLE:
-				return new Vector2(bounds.x + bounds.width / 2, bounds.y
-						+ bounds.height / 2);
-			case MIDDLE_LEFT:
-				return new Vector2(bounds.x, bounds.y + bounds.height / 2);
-			case MIDDLE_RIGHT:
-				return new Vector2(bounds.x + bounds.width, bounds.y
-						+ bounds.height / 2);
-			default:
-				return new Vector2();
+		case TOP_LEFT:
+			return new Vector2(bounds.x, bounds.y + bounds.height);
+		case TOP_RIGHT:
+			return new Vector2(bounds.x + bounds.width, bounds.y
+					+ bounds.height);
+		case TOP:
+			return new Vector2(bounds.x + bounds.width / 2, bounds.y
+					+ bounds.height);
+		case BOTTOM:
+			return new Vector2(bounds.x + bounds.width / 2, bounds.y);
+		case BOTTOM_LEFT:
+			return new Vector2(bounds.x, bounds.y);
+		case BOTTOM_RIGHT:
+			return new Vector2(bounds.x + bounds.width, bounds.y);
+		case MIDDLE:
+			return new Vector2(bounds.x + bounds.width / 2, bounds.y
+					+ bounds.height / 2);
+		case MIDDLE_LEFT:
+			return new Vector2(bounds.x, bounds.y + bounds.height / 2);
+		case MIDDLE_RIGHT:
+			return new Vector2(bounds.x + bounds.width, bounds.y
+					+ bounds.height / 2);
+		default:
+			return new Vector2();
 		}
 	}
 

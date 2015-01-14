@@ -64,10 +64,10 @@ public class FlashScreen extends AbstractGameScreen {
 	boolean	switchScreen	= false;
 	void switchScreen() {
 		if (!switchScreen) {
-//			parent.setScreen(gameScreen);
+			parent.setScreen(gameScreen);
 //			parent.setScreen(dictionaryScreen);
 //			parent.setScreen(new MusicPlayerScreen(parent));
-			parent.setScreen(new TestScreen(parent));
+//			parent.setScreen(new TestScreen(parent));
 			switchScreen = true;
 		}
 	}

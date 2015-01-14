@@ -7,7 +7,7 @@ import com.coder5560.game.screens.FlashScreen;
 
 import engine.module.screens.GameCore;
 
-public class DesktopLauncher {
+public class GdxEngineDesktop {
 	public static void main(String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.width = Constants.WIDTH_SCREEN;

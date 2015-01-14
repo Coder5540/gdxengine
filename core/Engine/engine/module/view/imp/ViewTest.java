@@ -107,5 +107,10 @@ public class ViewTest extends ViewElement {
 		}
 		return this;
 	}
+	@Override
+	public int getId() {
+		return 0;
+	}
 
+	
 }

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import utils.factory.Factory;
 
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -23,11 +22,11 @@ import com.coder5560.game.enums.Direct;
 import engine.element.GroupElement;
 import engine.module.updatehandler.IUpdateHandler;
 
-public class ListView extends GroupElement implements OnStopListener {
+public class ListView extends GroupElement implements PanStopListener {
 
-	private ArrayList<Page>	pages;
-	private int				currentSelected	= 0;
-	private ListViewPan		pan;
+	public ArrayList<Page> pages;
+	private int currentSelected = 0;
+	private PanListView pan;
 
 	public ListView(float width, float height) {
 		super();
@@ -62,13 +61,14 @@ public class ListView extends GroupElement implements OnStopListener {
 			pg.setTouchable(Touchable.enabled);
 			pg.setOrigin(Align.center);
 			pg.setTransform(true);
-			pg.addListener(new ClickListener(){
+			pg.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
 					pg.clearActions();
-					pg.addAction(Actions.sequence(Actions.scaleTo(1.2f, 1.2f, .05f),
-							Actions.scaleTo(1f, 1f, .1f, Interpolation.swingOut),
-							Actions.run(new Runnable() {
+					pg.addAction(Actions.sequence(Actions.scaleTo(1.2f, 1.2f,
+							.05f), Actions.scaleTo(1f, 1f, .1f,
+							Interpolation.swingOut), Actions
+							.run(new Runnable() {
 								@Override
 								public void run() {
 								}
@@ -78,20 +78,19 @@ public class ListView extends GroupElement implements OnStopListener {
 			tb.add(pg).pad(5).row();
 		}
 		page.add(scr).expand().fill();
-		
-		
-		
+
 		Page page2 = pages.get(6);
 		page2.row();
-		ScrollView scrollView = new ScrollView(page2.getWidth(), page2.getHeight());
+		ScrollView scrollView = new ScrollView(page2.getWidth(),
+				page2.getHeight());
 		page2.addActor(scrollView);
 
 	}
 
 	public void buildListener() {
 		this.addListener(new ActorGestureListener() {
-			boolean	isPanning		= false;
-			boolean	isPanVertical	= false;
+			boolean isPanning = false;
+			boolean isPanVertical = false;
 			@Override
 			public void pan(InputEvent event, float x, float y, float deltaX,
 					float deltaY) {
@@ -101,15 +100,14 @@ public class ListView extends GroupElement implements OnStopListener {
 						isPanVertical = true;
 				}
 
-				if (isPanVertical){
+				if (isPanVertical) {
 					for (Actor actor : pages.get(currentSelected).getChildren()) {
 						if (!(actor instanceof ScrollPane)) {
-							
+
 						}
 					}
 					return;
 				}
-					
 
 				if (!isPanning && !isPanVertical && Math.abs(deltaX) >= 5) {
 					isPanning = true;
@@ -220,234 +218,3 @@ public class ListView extends GroupElement implements OnStopListener {
 
 }
 
-abstract class ListViewPan {
-	public Page				current, next, previous;
-	public Rectangle		bound;
-	public OnStopListener	onStopListener;
-
-	public ListViewPan(Rectangle bound, OnStopListener onStopListener) {
-		super();
-		this.bound = bound;
-		this.onStopListener = onStopListener;
-	}
-
-	public void setData(Page current, Page next, Page previous) {
-		this.current = current;
-		this.next = next;
-		this.previous = previous;
-	}
-
-	public abstract void onUpdate(float deltaTime);
-
-	public abstract void onPan(float x, float y, float deltaX, float deltaY);
-
-	public abstract void onStop(float x, float y);
-
-	public abstract void onFling(float velocityX, float velocityY);
-
-}
-
-class PanNormal extends ListViewPan {
-
-	public PanNormal(Rectangle bound, OnStopListener onStopListener) {
-		super(bound, onStopListener);
-	}
-
-	@Override
-	public void onUpdate(float delta) {
-		onUpdateOther(delta);
-	}
-
-	private void onUpdateOther(float delta) {
-		next.setPosition(current.getX() + current.getWidth(), current.getY());
-		previous.setPosition(current.getX() - previous.getWidth(),
-				current.getY());
-		next.setTouchable(Touchable.disabled);
-		previous.setTouchable(Touchable.disabled);
-	}
-
-	@Override
-	public void onPan(float x, float y, float deltaX, float deltaY) {
-		current.setPosition(current.getX() + deltaX, current.getY() + deltaY);
-	}
-
-	@Override
-	public void onStop(float x, float y) {
-		current.clearActions();
-		if (current.getX(Align.center) > bound.x + 2 * bound.width / 3) {
-			current.addAction(Actions.sequence(
-					Actions.moveTo(bound.x + bound.width, bound.y, .23f),
-					Actions.run(new Runnable() {
-						@Override
-						public void run() {
-							onStopListener.onStop(Direct.RIGHT);
-						}
-					})));
-		} else if (current.getX(Align.center) < bound.x + bound.width / 3) {
-			current.addAction(Actions.sequence(
-					Actions.moveTo(bound.x - bound.width, bound.y, .25f),
-					Actions.run(new Runnable() {
-						@Override
-						public void run() {
-							onStopListener.onStop(Direct.LEFT);
-						}
-					})));
-		} else {
-			current.addAction(Actions.sequence(Actions.moveTo(bound.x, bound.y,
-					.3f)));
-		}
-	}
-
-	@Override
-	public void onFling(float velocityX, float velocityY) {
-
-	}
-}
-
-class PanFade extends ListViewPan {
-	public PanFade(Rectangle bound, OnStopListener onStopListener) {
-		super(bound, onStopListener);
-	}
-
-	@Override
-	public void onUpdate(float delta) {
-		onUpdateOther(delta);
-	}
-
-	private void onUpdateOther(float delta) {
-		next.setPosition(bound.x, bound.y);
-		previous.setPosition(bound.x, bound.y);
-		current.setVisible(true);
-		float percent = Math.abs(current.getX(Align.center)
-				- (bound.getX() + bound.getWidth() / 2))
-				/ (bound.width);
-		percent = MathUtils.clamp(percent, 0, 1);
-		current.getColor().a = 1 - percent;
-
-		if (current.getX(Align.center) > bound.x + bound.width / 2) {
-			next.setVisible(false);
-			next.getColor().a = 1f;
-			previous.setVisible(true);
-			previous.getColor().a = percent;
-			previous.setZIndex(current.getZIndex() - 1);
-		} else if (current.getX(Align.center) < bound.x + bound.width / 2) {
-			next.getColor().a = percent;
-			next.setVisible(true);
-			previous.setVisible(false);
-			previous.getColor().a = 1f;
-			next.setZIndex(current.getZIndex() - 1);
-		}
-
-		next.setTouchable(Touchable.disabled);
-		previous.setTouchable(Touchable.disabled);
-	}
-
-	@Override
-	public void onPan(float x, float y, float deltaX, float deltaY) {
-		current.setPosition(current.getX() + deltaX, current.getY() + deltaY);
-	}
-
-	@Override
-	public void onStop(float x, float y) {
-		current.clearActions();
-		if (current.getX(Align.center) > bound.x + 2 * bound.width / 3) {
-			current.addAction(Actions.sequence(
-					Actions.moveTo(bound.x + bound.width, bound.y, .25f),
-					Actions.run(new Runnable() {
-						@Override
-						public void run() {
-							onStopListener.onStop(Direct.RIGHT);
-						}
-					})));
-		} else if (current.getX(Align.center) < bound.x + bound.width / 3) {
-			current.addAction(Actions.sequence(
-					Actions.moveTo(bound.x - bound.width, bound.y, .25f),
-					Actions.run(new Runnable() {
-						@Override
-						public void run() {
-							onStopListener.onStop(Direct.LEFT);
-						}
-					})));
-		} else {
-			current.addAction(Actions.sequence(Actions.moveTo(bound.x, bound.y,
-					.3f)));
-		}
-	}
-
-	@Override
-	public void onFling(float velocityX, float velocityY) {
-
-	}
-}
-
-class PanZoomOut extends ListViewPan {
-	float	maxScale	= 1.2f;
-
-	public PanZoomOut(Rectangle bound, OnStopListener onStopListener) {
-		super(bound, onStopListener);
-	}
-
-	@Override
-	public void onUpdate(float delta) {
-		onUpdateOther(delta);
-	}
-
-	private void onUpdateOther(float delta) {
-		next.setPosition(current.getX() + current.getWidth(), current.getY());
-		previous.setPosition(current.getX() - previous.getWidth(),
-				current.getY());
-
-		float percent = Math.abs(current.getX(Align.center)
-				- (bound.x + bound.width / 2))
-				/ (bound.width / 2);
-		percent = MathUtils.clamp(percent, 0, 1f);
-
-		next.setScale(1 - (1 - percent) * (maxScale - 1));
-		previous.setScale(1 - (1 - percent) * (maxScale - 1));
-		current.setScale(1 - percent * (maxScale - 1));
-
-		next.setTouchable(Touchable.disabled);
-		previous.setTouchable(Touchable.disabled);
-	}
-
-	@Override
-	public void onPan(float x, float y, float deltaX, float deltaY) {
-		current.setPosition(current.getX() + deltaX, current.getY() + deltaY);
-	}
-
-	@Override
-	public void onStop(float x, float y) {
-		current.clearActions();
-		if (current.getX(Align.center) > bound.x + 2 * bound.width / 3) {
-			current.addAction(Actions.sequence(Actions.moveTo(bound.x
-					+ bound.width, bound.y, .25f, Interpolation.linear),
-					Actions.run(new Runnable() {
-						@Override
-						public void run() {
-							onStopListener.onStop(Direct.RIGHT);
-						}
-					})));
-		} else if (current.getX(Align.center) < bound.x + bound.width / 3) {
-			current.addAction(Actions.sequence(Actions.moveTo(bound.x
-					- bound.width, bound.y, .25f, Interpolation.linear),
-					Actions.run(new Runnable() {
-						@Override
-						public void run() {
-							onStopListener.onStop(Direct.LEFT);
-						}
-					})));
-		} else {
-			current.addAction(Actions.sequence(Actions.moveTo(bound.x, bound.y,
-					.3f, Interpolation.linear)));
-		}
-	}
-
-	@Override
-	public void onFling(float velocityX, float velocityY) {
-
-	}
-}
-
-interface OnStopListener {
-	public void onStop(Direct direct);
-}

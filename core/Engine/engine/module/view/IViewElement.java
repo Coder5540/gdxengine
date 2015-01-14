@@ -25,13 +25,13 @@ public interface IViewElement {
 
 	public void onEndDraw(Batch batch);
 
-	public IViewElement registerUpdateHandler(IUpdateHandler handler);
+	public void registerUpdateHandler(IUpdateHandler handler);
 
 	public boolean unregisterUpdateHandler(IUpdateHandler handler);
 
 	public boolean clearUpdatehandler(IUpdateHandler handler);
 
-	public IViewElement clearUpdateHandlers();
+	public void clearUpdateHandlers();
 
 	public IViewElement setViewState(ViewState state);
 
@@ -39,7 +39,7 @@ public interface IViewElement {
 
 	public boolean isIgnoreUpdate();
 
-	public IViewElement setIgnoreUpdate(boolean pIgnoreUpdate);
+	public void setIgnoreUpdate(boolean pIgnoreUpdate);
 
 	public IViewElement setViewName(ViewName viewName);
 

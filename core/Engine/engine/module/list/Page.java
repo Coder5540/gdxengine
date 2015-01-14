@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import engine.element.TableElement;
 
 public class Page extends TableElement {
-	private int	id;
+	private int id;
 
 	public Page(int id, float width, float height) {
 		super();
@@ -31,5 +31,5 @@ public class Page extends TableElement {
 				Color.BLUE));
 		add(lb);
 	}
-	
+
 }
