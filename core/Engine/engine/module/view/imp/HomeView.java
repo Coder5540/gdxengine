@@ -4,6 +4,7 @@ import utils.listener.OnCompleteListener;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -48,13 +49,13 @@ public class HomeView extends ViewElement {
 		iconSize = (iconW < iconH) ? iconW : iconH;
 	}
 
+	Texture texture = new Texture(Gdx.files.internal("Img/Add-User-icon.png"));
+
 	public IViewElement buildComponent() {
 		calculateSize();
-		for (int i = 0; i < 12; i++) {
+		for (int i = 0; i < 10000; i++) {
 			addHomeItem(new HomeItemData(HomeItemName.ITEM_DEFAULT, iconSize,
-					iconSize, new Texture(
-							Gdx.files.internal("Img/Add-User-icon.png")),
-					"App " + i, homeItemClick));
+					iconSize, texture, "App " + i, homeItemClick));
 		}
 		return this;
 	}
@@ -134,5 +135,4 @@ public class HomeView extends ViewElement {
 		return 0;
 	}
 
-	
 }

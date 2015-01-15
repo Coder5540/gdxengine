@@ -16,7 +16,6 @@ public abstract class Controller implements IController {
 	public AbstractGameScreen				_Screen;
 	public IViewElement						_CurrentView;
 	public HashMap<ViewName, IViewElement>	map;
-
 	public Controller(GameCore _GameCore, Engine _Engine,
 			AbstractGameScreen _Screen) {
 		super();

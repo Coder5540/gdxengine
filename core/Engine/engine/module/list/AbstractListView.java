@@ -34,7 +34,7 @@ public abstract class AbstractListView extends GroupElement implements
 				getHeight()));
 	}
 
-	public AbstractListView addPage(Page page) {
+	public AbstractListView addPage(TableElement page) {
 		pages.add(page);
 		rebuildComponent();
 		return this;

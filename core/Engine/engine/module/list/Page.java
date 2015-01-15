@@ -14,7 +14,6 @@ public class Page extends TableElement {
 		super();
 		this.id = id;
 		this.setSize(width, height);
-		setTransform(true);
 		setup();
 	}
 
@@ -31,5 +30,4 @@ public class Page extends TableElement {
 				Color.BLUE));
 		add(lb);
 	}
-
 }

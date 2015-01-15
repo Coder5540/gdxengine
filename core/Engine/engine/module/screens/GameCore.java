@@ -14,27 +14,33 @@ import com.coder5560.game.assets.AssetFactory;
 
 import engine.module.networks.FacebookConnector;
 import engine.module.networks.ImageDownloader;
+import engine.module.pool.PoolManager;
 
 public abstract class GameCore implements ApplicationListener {
 
-	private boolean				init;
-	private boolean				showFps;
-	private AbstractGameScreen	currScreen;
-	private AbstractGameScreen	nextScreen;
-	private FrameBuffer			currFbo;
-	private FrameBuffer			nextFbo;
-	private SpriteBatch			batch;
-	private float				t;
-	private ScreenTransition	screenTransition;
-	private PlatformResolver	platformResolver;
-	public FacebookConnector	facebookConnector;
-	public INetworkManager		networkManager;
-	public IAudioStreamPlayer	audioStreamPlayer;
+	private boolean init;
+	private boolean showFps;
+	private AbstractGameScreen currScreen;
+	private AbstractGameScreen nextScreen;
+	private FrameBuffer currFbo;
+	private FrameBuffer nextFbo;
+	private SpriteBatch batch;
+	private float t;
+	private ScreenTransition screenTransition;
+	private PlatformResolver platformResolver;
 
-	public InputMultiplexer		inputMultiplexer;
-	
+	public FacebookConnector facebookConnector;
+	public INetworkManager networkManager;
+	public IAudioStreamPlayer audioStreamPlayer;
+
+	public InputMultiplexer inputMultiplexer;
+
+	public PoolManager _PoolManager;
+
 	@Override
 	public void create() {
+		_PoolManager = new PoolManager();
+		_PoolManager.onCreate(null);
 		ImageDownloader.getInstance().setGameCore(this);
 	}
 
@@ -183,7 +189,5 @@ public abstract class GameCore implements ApplicationListener {
 	public boolean isShowFps() {
 		return showFps;
 	}
-	
-	
-	
+
 }

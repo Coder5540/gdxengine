@@ -129,6 +129,15 @@ public abstract class AbstractListVertical extends GroupElement {
 			root.addActor(item);
 		}
 	}
+	
+	public boolean available(){
+		if(items == null || items.size <=0 ) return false;
+		
+		return true;
+	}
+	
+	
+	
 
 	private void buildListener() {
 		root.addListener(new ActorGestureListener() {

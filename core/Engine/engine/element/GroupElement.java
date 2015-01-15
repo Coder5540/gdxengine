@@ -2,17 +2,21 @@ package engine.element;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.utils.Pool.Poolable;
 
 import engine.module.updatehandler.IUpdateHandler;
 import engine.module.updatehandler.UpdateHandlerList;
 
-public class GroupElement extends Group implements IEntityPosition {
+public class GroupElement extends Group implements IEntityPosition, Poolable {
 
-	protected boolean mIgnoreUpdate;
+	public boolean mIgnoreUpdate;
 
-	private UpdateHandlerList handlerList = new UpdateHandlerList(4);
+	public UpdateHandlerList handlerList = new UpdateHandlerList(4);
 
-	private boolean drawChildren = true;
+	public boolean drawChildren = true;
+
+	public int id = -1;
 
 	public GroupElement() {
 		super();
@@ -81,4 +85,23 @@ public class GroupElement extends Group implements IEntityPosition {
 		handlerList.clear();
 	}
 
+	public int getID() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	@Override
+	public void reset() {
+		setTouchable(Touchable.disabled);
+		setIgnoreUpdate(false);
+		setId(-1);
+		clearUpdateHandlers();
+		clearChildren();
+		clearActions();
+		clearListeners();
+		drawChildren = true;
+	}
 }

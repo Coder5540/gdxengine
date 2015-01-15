@@ -4,20 +4,24 @@ import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.coder5560.game.assets.Assets;
 
+import engine.element.TableElement;
+import engine.module.pool.PoolManager;
+
 public class TestListView extends AbstractListView {
 
 	public TestListView(float width, float height) {
 		super(width, height);
 	}
 
-	public TestListView buildComponent() {
-		for (int i = 0; i < 10; i++) {
-			Page page = newPage();
-			page.setBackground(new TextureRegionDrawable(
+	public TestListView buildComponent(PoolManager poolManager) {
+		for (int i = 0; i < 100; i++) {
+			TableElement tbElement = poolManager.tableElementPool.obtain();
+			tbElement.setSize(getWidth(), getHeight());
+			tbElement.setBackground(new TextureRegionDrawable(
 					Assets.instance.ui.reg_ninepatch));
-			page.setOrigin(Align.center);
+			tbElement.setOrigin(Align.center);
+			addPage(tbElement);
 		}
 		return this;
 	}
-
 }

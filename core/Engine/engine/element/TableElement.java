@@ -1,57 +1,72 @@
 package engine.element;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.utils.Pool.Poolable;
 
 import engine.module.updatehandler.IUpdateHandler;
 import engine.module.updatehandler.UpdateHandlerList;
 
-public abstract class TableElement extends Table implements IEntityPosition {
+public class TableElement extends Table implements IEntityPosition,
+		Poolable {
+	public int id = -1;
 
-	protected boolean			mIgnoreUpdate;
+	public boolean mIgnoreUpdate;
 
-	private boolean				drawChildren	= true;
-	
-	private UpdateHandlerList	handlerList		= new UpdateHandlerList(4);
+	public boolean drawChildren = true;
+
+	public TableElement() {
+		super();
+		setUp();
+	}
+
+	public TableElement(Skin skin) {
+		super(skin);
+		setUp();
+	}
+
+	private void setUp() {
+		setClip(true);
+		setTransform(true);
+		setOrigin(Align.center);
+	}
+
+	private UpdateHandlerList handlerList = new UpdateHandlerList(4);
+
+	public void act(float deltatime) {
+		if (!mIgnoreUpdate) {
+			handlerList.onUpdate(deltatime);
+			super.act(deltatime);
+		}
+	}
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		if (isVisible()) {
-			beginDrawActor(batch);
-
-			Color color = getColor();
-
-			batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
-
-			onDraw(batch);
-
-			beginDrawChildren(batch);
-
+			drawBehind(batch);
 			if (drawChildren)
 				super.draw(batch, parentAlpha);
-
-			endDrawActor(batch);
+			drawInfront(batch);
 		}
 	}
 
-	
-	protected void beginDrawActor(Batch batch) {
-
-	}
-	public void onDraw(Batch batch) {
-	}
-	
-	protected void beginDrawChildren(Batch batch) {
-
+	public void drawBehind(Batch batch) {
 	}
 
-	protected void endDrawActor(Batch batch) {
-
+	public void drawInfront(Batch batch) {
 	}
 
-	public abstract int getId();
-	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public boolean isDrawChildren() {
 		return drawChildren;
 	}
@@ -60,21 +75,12 @@ public abstract class TableElement extends Table implements IEntityPosition {
 		this.drawChildren = drawChildren;
 	}
 
-	
-
 	public void registerUpdateHandler(IUpdateHandler handler) {
 		handlerList.add(handler);
 	}
 
 	public boolean unregisterUpdateHandler(IUpdateHandler handler) {
 		return handlerList.removeValue(handler, true);
-	}
-
-	public void act(float deltatime) {
-		if (!mIgnoreUpdate) {
-			handlerList.onUpdate(deltatime);
-			super.act(deltatime);
-		}
 	}
 
 	public boolean isIgnoreUpdate() {
@@ -97,4 +103,16 @@ public abstract class TableElement extends Table implements IEntityPosition {
 		handlerList.clear();
 	}
 
+	@Override
+	public void reset() {
+		setTouchable(Touchable.disabled);
+		setIgnoreUpdate(false);
+		setId(-1);
+		clearUpdateHandlers();
+		clearChildren();
+		clearActions();
+		clearListeners();
+		drawChildren = true;
+		setUp();
+	}
 }
